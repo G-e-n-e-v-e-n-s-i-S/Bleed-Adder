@@ -18,6 +18,7 @@ public class StartClass
 {
 	
 	
+	
 	static JFrame window;
 	
 	static Container container;
@@ -170,7 +171,7 @@ public class StartClass
 			
 			
 			
-			new AddBleedWorker(folderPath, bleedWidthPercent, bleedHeightPercent, bleedColor, fillCorners, "Yes").execute();
+			new BleederWorker(folderPath, bleedWidthPercent, bleedHeightPercent, bleedColor, fillCorners, "Yes").execute();
 			
 			
 			

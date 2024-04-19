@@ -3,7 +3,6 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
@@ -53,37 +52,43 @@ public class GUI
 		constraints.gridy = y;
 		
 		
-		//How much larger (pixels*2) should it be compared to other thing on the same row (x), and same column (y) ?
+		
+		//How much larger (pixels*2) should it be compared to other thing on the same row and same column ?
 		constraints.ipadx = xPixel;
 		
 		constraints.ipady = yPixel;
 		
 		
-		//How fast will it resize compared to other thing on the same row (x), and same column (y) ?
+		
+		//How fast will it resize compared to other thing on the same row, and same column ?
 		constraints.weightx = xWeight;
 		
 		constraints.weighty = yWeight;
 		
 		
-		//How many columns (x), and how many rows (y) should it span ?
+		
+		//How many columns and rows should it span ?
 		constraints.gridwidth = xSize;
 		
 		constraints.gridheight = ySize;
+		
 		
 		
 		//If it's smaller than it's spot on the grid, how should it fill it ?
 		constraints.fill = fill;
 		
 		
+		
 		//If it must not fill it's spot on the grid, where should it be anchored ?
 		constraints.anchor = anchor;
+		
 		
 		
 		//How much pixels should it leave between itself and the edges of it's spot on the grid ?
 		constraints.insets = new Insets(padTop, padLeft, padBottom, padRight);
 		
 		
-		//Return the constraints
+		
 		return constraints;
 		
 	}
@@ -154,8 +159,6 @@ public class GUI
 	
 	
 	
-	
-	
 	public static JComboBox<String> addComboBox(Container container, GridBagConstraints constraints, String[] labelTexts, ActionListener actionListener)
 	{
 		
@@ -194,8 +197,6 @@ public class GUI
 	
 	
 	
-	
-	
 	public static JButton addButton(Container container, GridBagConstraints constraints, String text, ActionListener actionListener)
 	{
 		
@@ -208,8 +209,6 @@ public class GUI
 		return button;
 		
 	}
-	
-	
 	
 	
 	
@@ -237,8 +236,6 @@ public class GUI
 		return addCheckBox(container, constraints, null);
 		
 	}
-	
-	
 	
 	
 	
@@ -287,8 +284,6 @@ public class GUI
 	
 	
 	
-	
-	
 	public static JTextField addTextField(Container container, GridBagConstraints constraints, String defaultText, int columns, int horizontalAlignment)
 	{
 		
@@ -311,8 +306,6 @@ public class GUI
 	
 	
 	
-	
-	
 	public static JProgressBar addProgressBar(Container container, GridBagConstraints constraints)
 	{
 		
@@ -325,8 +318,6 @@ public class GUI
 		return bar;
 		
 	}
-	
-	
 	
 	
 	
@@ -366,8 +357,6 @@ public class GUI
 	
 	
 	
-	
-	
 	public static JTextArea addLabeledTextArea(Container container, int x, int y, int ySize, String labelText, String defaultText, boolean labelOnTheLeft, int xPixelText, int xSizeText)
 	{
 		
@@ -401,8 +390,6 @@ public class GUI
 		return addLabeledTextArea(container, 0, y, ySize, labelText, defaultText, true, 0, 2);
 		
 	}
-	
-	
 	
 	
 	
@@ -444,8 +431,6 @@ public class GUI
 	
 	
 	
-	
-	
 	public static void updateConstraints(Container container, Component component, GridBagConstraints constraints)
 	{
 		
@@ -458,8 +443,6 @@ public class GUI
 		container.repaint();
 		
 	}
-	
-	
 	
 	
 	
@@ -487,13 +470,11 @@ public class GUI
 			}
 		}
 		
-		System.out.println(new Date() + "   ERROR:    Impossible de trouver un composant avec le label ' " + labelText + " '");
+		System.out.println(new Date().toString().substring(11, 20) + "  ERROR:   Cannot find component with label ' " + labelText + " '");
 		
 		return null;
 		
 	}
-	
-	
 	
 	
 	
@@ -521,13 +502,11 @@ public class GUI
 			}
 		}
 		
-		System.out.println(new Date() + "   ERROR:    Impossible de trouver un composant avec le label ' " + labelText + " '");
+		System.out.println(new Date().toString().substring(11, 20) + "   ERROR:   Cannot find component with label ' " + labelText + " '");
 		
 		return null;
 		
 	}
-	
-	
 	
 	
 	
@@ -558,13 +537,11 @@ public class GUI
 			}
 		}
 		
-		System.out.println(new Date() + "   ERROR:    Impossible de trouver un composant avec le label ' " + labelText + " '");
+		System.out.println(new Date().toString().substring(11, 20) + "   ERROR:   Cannot find component with label ' " + labelText + " '");
 		
 		return null;
 		
 	}
-	
-	
 	
 	
 	
@@ -588,8 +565,6 @@ public class GUI
 			}
 		}
 	} 
-	
-	
 	
 	
 	
@@ -639,8 +614,6 @@ public class GUI
 	
 	
 	
-	
-	
 	static String[] stringListToArray(List<String> list)
 	{
 		
@@ -661,8 +634,6 @@ public class GUI
 	
 	
 	
-	
-	
 	public static String pad(String string, int length)
 	{
 		
@@ -674,24 +645,17 @@ public class GUI
 	
 	
 	
-	
-	
 	static List<File> getFilesInFolder(String pathName, int getInSubFolders)
 	{
 		
-		//S'assurer que le nom est complet
 		if (!pathName.endsWith("/")) pathName = pathName +"/";
 		
 		
-		//Préparer la liste des fichiers
+		
 		List<File> returnedFiles = new ArrayList<File>();
 		
-		
-		//Charger le dossier
 		File folder = new File(pathName);
 		
-		
-		//Vérifier que c'est un dossier
 		if (!folder.isDirectory())
 		{
 			
@@ -701,67 +665,31 @@ public class GUI
 			
 		}
 		
-		
-		//Trouver tous les fichiers
 		File[] files = folder.listFiles();
 		
 		
-		//Cycler sur les fichiers
+		
 		for (int i=0;i<files.length;i++)
 		{
 			
-			//Le nom du fichier
 			String filePathName = files[i].getPath();
 			
-			
-			//Regarder si c'est un sous-dossier
 			if (files[i].isDirectory())
 			{
 				
-				//Si on doit charger les sous-dossiers, le faire
 				if (getInSubFolders > 0) returnedFiles.addAll(getFilesInFolder(filePathName, getInSubFolders-1));
 			
 			}
 			
-			
-			//Sinon, ajouter à la liste
 			else
 			{
 				
-				//Le charger
 				returnedFiles.add(files[i]);
 				
 			}
 		}
 		
-		
-		//Renvoyer
 		return returnedFiles;
-		
-	}
-}
-
-
-
-
-
-
-
-
-class ComboBoxListener implements ActionListener
-{
-	
-	@Override
-	public void actionPerformed(ActionEvent event)
-	{
-		
-		JComboBox<?> comboBox = (JComboBox<?>) event.getSource();
-		
-		String text = (String) comboBox.getSelectedItem();
-		
-		System.out.println(new Date() + "   " + text);
-		
-		System.exit(0);
 		
 	}
 }

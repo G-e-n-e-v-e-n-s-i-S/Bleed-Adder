@@ -1165,7 +1165,9 @@ public class Bleeder
 
 
 
-class AddBleedWorker extends SwingWorker<Integer, Integer>
+
+
+class BleederWorker extends SwingWorker<Integer, Integer>
 {
 	
 	String loadFolderPath;
@@ -1180,7 +1182,7 @@ class AddBleedWorker extends SwingWorker<Integer, Integer>
 	
 	String splitDFCString;
 	
-	AddBleedWorker(String loadFolderPath, String bleedWidthPercentString, String bleedHeightPercentString, String bleedColorString, String fillCornersString, String splitDFCString)
+	BleederWorker(String loadFolderPath, String bleedWidthPercentString, String bleedHeightPercentString, String bleedColorString, String fillCornersString, String splitDFCString)
 	{ 
 		
 		this.loadFolderPath = loadFolderPath;
