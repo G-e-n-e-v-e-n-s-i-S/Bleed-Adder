@@ -51,7 +51,7 @@ public class Bleeder
 		
 		logToConsole = true;
 		
-		addBleed("C:/Users/Oli/Downloads/Ziatoras Proving Ground", "4.8", "3.6", "Black", "Yes", "Yes");
+		addBleed("D:/Renders", "4.8", "3.6", "Black", "Yes", "Yes");
 		
 	}
 	
@@ -1205,11 +1205,5 @@ class AddBleedWorker extends SwingWorker<Integer, Integer>
 		
     	return 0;
     	
-    }
-	
-	@Override
-    protected void done()
-    {
-        
     }
 }
