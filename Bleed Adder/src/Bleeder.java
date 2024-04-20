@@ -51,7 +51,7 @@ public class Bleeder
 	//	
 	//	logToConsole = true;
 	//	
-	//	addBleed("D:/Renders", "4.8", "3.6", "Black", "Yes", "Yes");
+	//	addBleed("D:/Renders/", "4.8", "3.6", "Auto", "Yes", "Yes");
 	//	
 	//}
 	
@@ -92,13 +92,6 @@ public class Bleeder
 			log("Specified folder path ' " + loadFolderPath + " ' is not a folder.", Color.red, "folder");
 			
 			return;
-			
-		}
-		
-		if (!saveFolder.exists())
-		{
-			
-			saveFolder.mkdirs();
 			
 		}
 		
@@ -157,7 +150,16 @@ public class Bleeder
 		} catch (Exception e)
 		{
 			
-			log("Could not interpret horizontal size ' " + bleedWidthPercentString + " ' as a number.", Color.red, "image");
+			log("Could not interpret bleed horizontal size ' " + bleedWidthPercentString + " ' as a number.", Color.red, "image");
+			
+			return;
+			
+		}
+		
+		if (bleedWidthPercent < 0d)
+		{
+			
+			log("Bleed horizontal size must be positive.", Color.red, "image");
 			
 			return;
 			
@@ -177,20 +179,29 @@ public class Bleeder
 			
 		}
 		
+		if (bleedHeightPercent < 0d)
+		{
+			
+			log("Bleed vertical size must be positive.", Color.red, "image");
+			
+			return;
+			
+		}
+		
 		
 		
 		//Parse color
-		int bleedColor = 0;
+		Integer bleedColor = -3623936;
 		
-		if (bleedColorString.equals("Black")) bleedColor = -16777216;
+		if (bleedColorString.equals("Auto")) bleedColor = null;
+		
+		else if (bleedColorString.equals("Black")) bleedColor = -16777216;
 		
 		else if (bleedColorString.equals("White")) bleedColor = -1;
 		
 		else if (bleedColorString.equals("Grey")) bleedColor = -3618616;
 		
-		else if (bleedColorString.equals("Gold")) bleedColor = -3623936;
-		
-		else
+		else if (!bleedColorString.equals("Gold"))
 		{
 			
 			log("Could not interpret bleed color ' " + bleedColorString + " '.", Color.red, "image");
@@ -228,6 +239,16 @@ public class Bleeder
 			log("Could not interpret split DFC ' " + splitDFCString + " '.", Color.red, "image");
 			
 			return;
+			
+		}
+		
+		
+		
+		//Make destination folder
+		if (!saveFolder.exists())
+		{
+			
+			saveFolder.mkdirs();
 			
 		}
 		
@@ -421,10 +442,18 @@ public class Bleeder
 			
 			
 			
-			//Calculate bleed in pixels
+			//Calculate bleed in pixels, clamp it
 			int bleedWidth = (int) Math.round(front.getWidth() * bleedWidthPercent);
 			
 			int bleedHeight = (int) Math.round(front.getHeight() * bleedHeightPercent);
+			
+			if (bleedWidth < 0) bleedWidth = 0;
+			
+			if (bleedWidth > 10000) bleedWidth = 10000;
+			
+			if (bleedHeight < 0) bleedHeight = 0;
+			
+			if (bleedHeight > 10000) bleedHeight = 10000;
 			
 			
 			
@@ -514,7 +543,7 @@ public class Bleeder
 			
 		}
 		
-		else
+		else if (!logToConsole)
 		{
 			
 			StartClass.imageMessage.setText("");
@@ -541,13 +570,36 @@ public class Bleeder
 	
 	
 	
-	public static BufferedImage addBorders(BufferedImage image, int bleedWidth, int bleedHeight, int bleedColor)
+	public static BufferedImage addBorders(BufferedImage image, int bleedWidth, int bleedHeight, Integer bleedColor)
 	{
 		
 		//Get info
 		int width = image.getWidth();
 		
 		int height = image.getHeight();
+		
+		
+		
+		//Auto detect color
+		if (bleedColor == null)
+		{
+			
+			List<Integer> colors = new ArrayList<>();
+			
+			int x = width/2;
+			
+			for (int i = -5; i < 5; i++)
+			{
+				
+				if (x+i < 0 || x+i >= width) break;
+				
+				colors.add(image.getRGB(x, height-1));
+				
+			}
+			
+			bleedColor = averageColor(colors);
+			
+		}
 		
 		
 		

@@ -92,7 +92,7 @@ public class StartClass
 		
 		
 		
-		GUI.addLabeledComboBox(container, 4, 1, "Bleed Color :", new String[] {"Black", "White", "Grey", "Gold"}, true, 80, 2);
+		GUI.addLabeledComboBox(container, 4, 1, "Bleed Color :", new String[] {"Auto", "Black", "White", "Grey", "Gold"}, true, 80, 2);
 		
 		GUI.addLabeledComboBox(container, 4, 2, "Recolor Corners :", new String[] {"Yes", "No"}, true, 80, 2);
 		

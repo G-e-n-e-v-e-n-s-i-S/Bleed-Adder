@@ -13,6 +13,7 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -304,7 +305,7 @@ public class GUI
 		
 	}
 	
-	
+
 	
 	public static JProgressBar addProgressBar(Container container, GridBagConstraints constraints)
 	{
@@ -316,6 +317,19 @@ public class GUI
 		container.add(bar, constraints);
 		
 		return bar;
+		
+	}
+	
+	
+	
+	public static JColorChooser addColorChooser(Container container, GridBagConstraints constraints)
+	{
+		
+		JColorChooser chooser = new JColorChooser();
+		
+		container.add(chooser, constraints);
+		
+		return chooser;
 		
 	}
 	
@@ -426,6 +440,37 @@ public class GUI
 	{
 		
 		return addLabeledComboBox(container, 0, y, labelText, comboBoxTexts, true, 100, 3);
+		
+	}
+	
+	
+	
+	public static JColorChooser addLabeledColorChooser(Container container, int x, int y, String labelText, Color defaultColor, boolean labelOnTheLeft, int xPixelText, int xSizeText)
+	{
+		
+		JLabel label = new JLabel(labelText);
+		
+		GridBagConstraints labelConstraints = createConstraints(labelOnTheLeft ? x : x+1, y, 20, 10, 1, 1);
+		
+		container.add(label, labelConstraints);
+		
+		
+		
+		JColorChooser chooser = new JColorChooser();
+		
+		chooser.setColor(defaultColor);
+		
+		GridBagConstraints chooserBoxConstrints = createConstraints(labelOnTheLeft ? x+1 : x, y, xPixelText, 10, xSizeText, 1);
+		
+		container.add(chooser, chooserBoxConstrints);
+		
+		
+		
+		label.setLabelFor(chooser);
+		
+		
+		
+		return chooser;
 		
 	}
 	
