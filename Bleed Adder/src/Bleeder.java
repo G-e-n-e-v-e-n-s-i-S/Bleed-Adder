@@ -46,14 +46,14 @@ public class Bleeder
 	
 	
 	
-	public static void main(String[] args)
-	{
-		
-		logToConsole = true;
-		
-		addBleed("D:/Renders", "4.8", "3.6", "Black", "Yes", "Yes");
-		
-	}
+	//public static void main(String[] args)
+	//{
+	//	
+	//	logToConsole = true;
+	//	
+	//	addBleed("D:/Renders", "4.8", "3.6", "Black", "Yes", "Yes");
+	//	
+	//}
 	
 	
 	
@@ -126,7 +126,21 @@ public class Bleeder
 		
 		int imageCount = images.size();
 		
-		log(imageCount + " png images found.", Color.black, "folder");
+		if (imageCount < 1)
+		{
+			
+			log("No PNG images found in specified folder.", Color.red, "folder");
+			
+			return;
+			
+		}
+		
+		else
+		{
+			
+			log(imageCount + " PNG images found.", Color.black, "folder");
+			
+		}
 		
 		
 		
@@ -138,7 +152,7 @@ public class Bleeder
 		try
 		{
 			
-			bleedWidthPercent = Double.parseDouble(bleedWidthPercentString)/100d;
+			bleedWidthPercent = Double.parseDouble(bleedWidthPercentString.replace(",", "."))/100d;
 			
 		} catch (Exception e)
 		{
@@ -152,7 +166,7 @@ public class Bleeder
 		try
 		{
 			
-			bleedHeightPercent = Double.parseDouble(bleedHeightPercentString)/100d;
+			bleedHeightPercent = Double.parseDouble(bleedHeightPercentString.replace(",", "."))/100d;
 				
 		} catch (Exception e)
 		{
@@ -386,15 +400,15 @@ public class Bleeder
 				
 				front = new BufferedImage(height, width, BufferedImage.TYPE_INT_ARGB);
 				
-			    Graphics2D graphics = front.createGraphics();
-			    
-			    graphics.translate((height - width) / 2, (height - width) / 2);
-			    
-			    graphics.rotate(3 * Math.PI / 2, height / 2, width / 2);
-			    
-			    graphics.drawRenderedImage(image, null);
-			    
-			    graphics.dispose();
+				Graphics2D graphics = front.createGraphics();
+				
+				graphics.translate((width - height) / 2, (width - height) / 2);
+				
+				graphics.rotate(3 * Math.PI / 2, height / 2, width / 2);
+				
+				graphics.drawRenderedImage(image, null);
+				
+				graphics.dispose();
 			    
 			}
 			

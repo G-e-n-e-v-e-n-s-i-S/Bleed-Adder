@@ -98,12 +98,6 @@ public class StartClass
 		
 		
 		
-		//GUI.addLabeledComboBox(container, 0, 5, "Split DFCs :", new String[] {"Yes", "No"}, true, 0, 2);
-		
-		
-		
-		
-		
 		BleedButtonListener listener = new BleedButtonListener();
 		
 		JButton button = GUI.addButton(container, GUI.createConstraints(0, 6, 0, 20, 7, 1), "Add Bleed Margins", listener);
