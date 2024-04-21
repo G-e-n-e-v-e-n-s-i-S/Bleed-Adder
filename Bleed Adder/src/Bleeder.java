@@ -66,10 +66,10 @@ public class Bleeder
 		
 		
 		
-		//Load or create folders
-		if (!loadFolderPath.endsWith("/")) loadFolderPath = loadFolderPath +"/";
+		//Load folder
+		if (!loadFolderPath.endsWith(File.separator)) loadFolderPath = loadFolderPath + File.separator;
 		
-		String saveFolderPath = loadFolderPath + "Bleed/";
+		String saveFolderPath = loadFolderPath + "Bleed" + File.separator;
 		
 		
 		
@@ -347,7 +347,7 @@ public class Bleeder
 			//Cut in two if it's a double sided frame
 			if
 			(
-					splitDFC &&
+				splitDFC &&
 				(
 						(width == 753 && height == 523)
 					||	(width == 752 && height == 523)
@@ -556,7 +556,7 @@ public class Bleeder
 		
 		log(succesCount + " image" + (succesCount > 1 ? "s" : "") + " saved in the following folder:", Color.black, "save");
 		
-		log(saveFolderPath.replace("\\", "/"), Color.black, "saveName");
+		log(saveFolderPath, Color.black, "saveName");
 		
 		
 		
@@ -1089,7 +1089,7 @@ public class Bleeder
 		
 		if (size == 1) return colors.iterator().next();
 		
-		else if (size == 0) System.out.println(new Date().toString().substring(11, 20) + "  ERROR:   Trying to average zero colors");
+		else if (size == 0) System.out.println(new Date().toString().substring(11, 20) + "  ERROR:   Trying to average zero colors.");
 		
 		
 		

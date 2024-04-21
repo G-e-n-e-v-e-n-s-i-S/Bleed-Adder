@@ -5,6 +5,7 @@ import java.awt.GridBagLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -68,9 +69,9 @@ public class StartClass
 		
 		
 		
-		String desktopPath = System.getProperty("user.home") + "/Desktop/";
+		String desktopPath = System.getProperty("user.home") + File.separator + "Desktop" + File.separator;
 		
-		desktopPath = desktopPath.replace("\\", "/");
+		
 		
 		GUI.addLabeledTextField(container, 0, 0, "Folder Path :", desktopPath, true, 0, 6);
 		

@@ -203,11 +203,18 @@ public class GUI
 		
 		JButton button = new JButton(text);
 		
-		button.addActionListener(actionListener);
+		if (actionListener != null) button.addActionListener(actionListener);
 		
 		container.add(button, constraints);
 		
 		return button;
+		
+	}
+	
+	public static JButton addButton(Container container, GridBagConstraints constraints, String text)
+	{
+		
+		return addButton(container, constraints, text, null);
 		
 	}
 	
@@ -305,7 +312,7 @@ public class GUI
 		
 	}
 	
-
+	
 	
 	public static JProgressBar addProgressBar(Container container, GridBagConstraints constraints)
 	{
@@ -571,10 +578,9 @@ public class GUI
 				if (label.getText().equals(labelText))
 				{
 					
-					@SuppressWarnings("unchecked")
-					JComboBox<String> box = (JComboBox<String>) label.getLabelFor();
+					JComboBox<?> box = (JComboBox<?>) label.getLabelFor();
 					
-					String text = (String)box.getSelectedItem();
+					String text = String.valueOf(box.getSelectedItem());
 					
 					return text; 
 					
@@ -693,7 +699,7 @@ public class GUI
 	static List<File> getFilesInFolder(String pathName, int getInSubFolders)
 	{
 		
-		if (!pathName.endsWith("/")) pathName = pathName +"/";
+		if (!pathName.endsWith(File.separator)) pathName = pathName + File.separator;
 		
 		
 		
