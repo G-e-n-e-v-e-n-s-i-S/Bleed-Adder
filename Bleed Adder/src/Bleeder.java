@@ -1,4 +1,3 @@
-
 /*
  *	Adds margins to the sides of a card to respect print bleeding requirements
  *
@@ -44,6 +43,10 @@ public class Bleeder
 	
 	
 	
+	static String saveFolderName = "Bleed Adder Results";
+	
+	
+	
 	
 	
 	//public static void main(String[] args)
@@ -51,7 +54,7 @@ public class Bleeder
 	//	
 	//	logToConsole = true;
 	//	
-	//	addBleed("D:/Renders/", "4.8", "3.6", "Auto", "Yes", "Yes");
+	//	addBleed("D:\\MSE Folder\\Renders", "4.8", "3.6", "Auto", "Yes", "Yes");
 	//	
 	//}
 	
@@ -69,7 +72,7 @@ public class Bleeder
 		//Load folder
 		if (!loadFolderPath.endsWith(File.separator)) loadFolderPath = loadFolderPath + File.separator;
 		
-		String saveFolderPath = loadFolderPath + "Bleed" + File.separator;
+		String saveFolderPath = loadFolderPath + saveFolderName + File.separator;
 		
 		
 		
