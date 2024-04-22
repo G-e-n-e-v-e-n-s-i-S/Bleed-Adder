@@ -696,7 +696,7 @@ public class GUI
 	
 	
 	
-	static List<File> getFilesInFolder(String pathName, int getInSubFolders)
+	static List<File> getFilesInFolder(String pathName, int getInSubfolders)
 	{
 		
 		if (!pathName.endsWith(File.separator)) pathName = pathName + File.separator;
@@ -728,7 +728,7 @@ public class GUI
 			if (files[i].isDirectory())
 			{
 				
-				if (getInSubFolders > 0) returnedFiles.addAll(getFilesInFolder(filePathName, getInSubFolders-1));
+				if (getInSubfolders > 0) returnedFiles.addAll(getFilesInFolder(filePathName, getInSubfolders-1));
 			
 			}
 			

@@ -41,9 +41,15 @@ public class Bleeder
 	
 	public static boolean logToConsole = false;
 	
+	public static int failCount = 0;
+	
+	public static int dfcCount = 0;
+	
+	public static int rotatedCount = 0;
 	
 	
-	static String saveFolderName = "Bleed Adder Results";
+	
+	public static String saveFolderName = "Bleed Adder Results";
 	
 	
 	
@@ -134,7 +140,7 @@ public class Bleeder
 		else
 		{
 			
-			log(imageCount + " PNG images found.", Color.black, "folder");
+			log(imageCount + " PNG image" + (imageCount > 1 ? "s" : "") + " found.", Color.black, "folder");
 			
 		}
 		
@@ -275,9 +281,11 @@ public class Bleeder
 		
 		
 		
-		int failCount = 0;
+		failCount = 0;
 		
-		int DFCCount = 0;
+		dfcCount = 0;
+		
+		rotatedCount = 0;
 		
 		
 		
@@ -368,7 +376,7 @@ public class Bleeder
 			)
 			{
 				
-				DFCCount++;
+				dfcCount++;
 				
 				
 				
@@ -422,6 +430,10 @@ public class Bleeder
 			else if (width > height)
 			{
 				
+				rotatedCount++;
+				
+				
+				
 				front = new BufferedImage(height, width, BufferedImage.TYPE_INT_ARGB);
 				
 				Graphics2D graphics = front.createGraphics();
@@ -452,11 +464,11 @@ public class Bleeder
 			
 			if (bleedWidth < 0) bleedWidth = 0;
 			
-			if (bleedWidth > 10000) bleedWidth = 10000;
+			if (bleedWidth > 5000) bleedWidth = 5000;
 			
 			if (bleedHeight < 0) bleedHeight = 0;
 			
-			if (bleedHeight > 10000) bleedHeight = 10000;
+			if (bleedHeight > 5000) bleedHeight = 5000;
 			
 			
 			
@@ -539,10 +551,16 @@ public class Bleeder
 			
 		}
 		
-		else if (DFCCount > 0)
+		else if (dfcCount > 0 || rotatedCount > 0)
 		{
 			
-			log(DFCCount + " double faced card" + (DFCCount > 1 ? "s have" : " has") + " been split.", Color.black, "image");
+			String dfcString = dfcCount > 0 ? dfcCount + " double faced card" + (dfcCount > 1 ? "s" : "") + " split." : "";
+			
+			String rotatedString = rotatedCount > 0 ? rotatedCount + " battle card" + (rotatedCount > 1 ? "s" : "") + " rotated." : "";
+			
+			String separator = dfcString != "" && rotatedString != "" ? " " : "";
+			
+			log(dfcString + separator + rotatedString, Color.black, "image");
 			
 		}
 		
@@ -555,7 +573,7 @@ public class Bleeder
 		
 		
 		
-		int succesCount = imageCount + DFCCount - failCount;
+		int succesCount = imageCount + dfcCount - failCount;
 		
 		log(succesCount + " image" + (succesCount > 1 ? "s" : "") + " saved in the following folder:", Color.black, "save");
 		
