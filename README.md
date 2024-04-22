@@ -17,6 +17,6 @@ Decide if the corners should be recolored.
 If the images contain white corners (like some Magic Set Editor templates output), select yes.
 If the corners are already filled in with the card frame, a border or art, select no.
 
-Hit the "Add Bleed Margins" button.
-
 The program will create a new folder named "Bleed Adder Results" inside the specified folder, and store the results there.
+
+Hit the "Add Bleed Margins" button to run the program.
