@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -149,6 +150,14 @@ public class StartClass
 			saveMessage.setText("");
 			
 			saveNameMessage.setText("");
+			
+			folderMessage.setForeground(Color.black);
+			
+			imageMessage.setForeground(Color.black);
+			
+			saveMessage.setForeground(Color.black);
+			
+			saveNameMessage.setForeground(Color.black);
 			
 			Component[] components = window.getContentPane().getComponents();
 			

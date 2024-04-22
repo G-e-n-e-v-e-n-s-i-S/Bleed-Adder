@@ -41,6 +41,8 @@ public class Bleeder
 	
 	public static boolean logToConsole = false;
 	
+	public static boolean packWhenLogging = true;
+	
 	public static int failCount = 0;
 	
 	public static int dfcCount = 0;
@@ -72,6 +74,14 @@ public class Bleeder
 	{
 		
 		System.out.println(new Date().toString().substring(11, 20) + "  INFO:    Starting.");
+		
+		packWhenLogging = true;
+		
+		failCount = 0;
+		
+		dfcCount = 0;
+		
+		rotatedCount = 0;
 		
 		
 		
@@ -264,8 +274,6 @@ public class Bleeder
 		
 		
 		//Start iterating on the images
-		long lastErrorTime = System.currentTimeMillis();
-		
 		if (!logToConsole)
 		{
 			
@@ -281,14 +289,6 @@ public class Bleeder
 		
 		
 		
-		failCount = 0;
-		
-		dfcCount = 0;
-		
-		rotatedCount = 0;
-		
-		
-		
 		for (int i=0;i<imageCount;i++)
 		{
 			
@@ -300,12 +300,6 @@ public class Bleeder
 				
 				StartClass.progressBar.setString((i+1) + "/" + imageCount + "        " + (100*(i+1)/imageCount) + "%");
 				
-				if(System.currentTimeMillis() >= (lastErrorTime + 2*1000))
-				{
-					
-					log("Adding bleed...", Color.black, "image");
-					
-				}
 			}
 			
 			else if ((100*(i+1)/imageCount)%10 == 0 && (100*(i)/imageCount)%10 == 9)
@@ -333,8 +327,6 @@ public class Bleeder
 			{
 				
 				log("Could not load image ' " + images.get(i).getName() + " '.", Color.red, "image");
-				
-				lastErrorTime = System.currentTimeMillis();
 				
 				failCount++;
 				
@@ -514,22 +506,22 @@ public class Bleeder
 				
 				name = name.substring(0, name.length()-4);
 				
-				boolean succesFront = saveImage(front, saveFolderPath + name + "[FRONT].png");
+				boolean successFront = saveImage(front, saveFolderPath + name + "[FRONT].png");
 				
-				boolean succesBack = saveImage(back, saveFolderPath + name + "[BACK].png");
+				boolean successBack = saveImage(back, saveFolderPath + name + "[BACK].png");
 				
-				if (!succesFront) failCount++;
+				if (!successFront) failCount++;
 				
-				if (!succesBack) failCount++;
+				if (!successBack) failCount++;
 				
 			}
 			
 			else
 			{
 				
-				boolean succes = saveImage(front, saveFolderPath + name);
+				boolean success = saveImage(front, saveFolderPath + name);
 				
-				if (!succes) failCount++;
+				if (!success) failCount++;
 				
 			}
 		}
@@ -564,18 +556,18 @@ public class Bleeder
 			
 		}
 		
-		else if (!logToConsole)
+		else
 		{
 			
-			StartClass.imageMessage.setText("");
+			log("", Color.black, "image");
 			
 		}
 		
 		
 		
-		int succesCount = imageCount + dfcCount - failCount;
+		int successCount = imageCount + dfcCount - failCount;
 		
-		log(succesCount + " image" + (succesCount > 1 ? "s" : "") + " saved in the following folder:", Color.black, "save");
+		log(successCount + " image" + (successCount > 1 ? "s" : "") + " saved in the following folder:", Color.black, "save");
 		
 		log(saveFolderPath, Color.black, "saveName");
 		
@@ -1192,8 +1184,12 @@ public class Bleeder
 	public static void log(String text, Color color, String out)
 	{
 		
+		boolean textIsEmpty = text == null || text.equals("");
+		
 		if (logToConsole)
 		{
+			
+			if (textIsEmpty) return;
 			
 			System.out.println(new Date().toString().substring(11, 20) + (color == Color.black ? "  INFO:    " : "  ERROR:   " ) + text);
 			
@@ -1202,36 +1198,45 @@ public class Bleeder
 		else
 		{
 			
+			if (textIsEmpty)
+			{
+				
+				text = "";
+				
+				color = Color.black;
+				
+			}
+			
 			if (out.equals("folder"))
 			{
+				
+				if (!color.equals(Color.red) && StartClass.folderMessage.getForeground().equals(Color.red)) return;
 				
 				StartClass.folderMessage.setText(text);
 				
 				StartClass.folderMessage.setForeground(color);
-				
-				StartClass.window.pack();
 				
 			}
 			
 			else if (out.equals("image"))
 			{
 				
+				if (!color.equals(Color.red) && StartClass.imageMessage.getForeground().equals(Color.red)) return;
+				
 				StartClass.imageMessage.setText(text);
 				
 				StartClass.imageMessage.setForeground(color);
-				
-				StartClass.window.pack();
 				
 			}
 			
 			else if (out.equals("save"))
 			{
 				
+				if (!color.equals(Color.red) && StartClass.saveMessage.getForeground().equals(Color.red)) return;
+				
 				StartClass.saveMessage.setText(text);
 				
 				StartClass.saveMessage.setForeground(color);
-				
-				StartClass.window.pack();
 				
 			}
 			
@@ -1239,13 +1244,18 @@ public class Bleeder
 			else
 			{
 				
+				if (!color.equals(Color.red) && StartClass.saveNameMessage.getForeground().equals(Color.red)) return;
+				
 				StartClass.saveNameMessage.setText(text);
 				
 				StartClass.saveNameMessage.setForeground(color);
 				
-				StartClass.window.pack();
-				
 			}
+			
+			
+			
+			if (color.equals(Color.red) || packWhenLogging) StartClass.window.pack();
+			
 		}
 	}
 }
