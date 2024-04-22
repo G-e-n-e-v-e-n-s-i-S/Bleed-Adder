@@ -19,4 +19,6 @@ If the corners are already filled in with the card frame, a border or art, selec
 
 The program will create a new folder named "Bleed Adder Results" inside the specified folder, and store the results there.
 
+Any existing images found at these locations, will be overwritten!
+
 Hit the "Add Bleed Margins" button to run the program.
