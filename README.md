@@ -2,7 +2,7 @@
 
 Download the "Bleed.Adder.jar" file from the Releases page (link on the right) and run it by double-clicking on it.
 
-(You must have the Java Runtime Environment installed: https://www.java.com/en/download/manual.jsp)
+(You must have the Java Runtime Environment installed: https://www.java.com/en/download/)
 
 Specify the folder containing the card images.
 
