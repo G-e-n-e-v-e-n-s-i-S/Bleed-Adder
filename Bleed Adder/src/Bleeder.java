@@ -70,7 +70,7 @@ public class Bleeder
 	
 	
 	
-	public static void addBleed(String loadFolderPath, String bleedWidthPercentString, String bleedHeightPercentString, String bleedColorString, String fillCornersString, String splitDFCString)
+	public static void bleed(String loadFolderPath, String bleedWidthPercentString, String bleedHeightPercentString, String bleedColorString, String fillCornersString, String splitDFCString)
 	{
 		
 		System.out.println(new Date().toString().substring(11, 20) + "  INFO:    Starting.");
@@ -1297,10 +1297,10 @@ class BleederWorker extends SwingWorker<Integer, Integer>
     }
 	
 	@Override
-    protected Integer doInBackground() throws Exception
+    protected Integer doInBackground()
     {
     	
-    	Bleeder.addBleed(loadFolderPath, bleedWidthPercentString, bleedHeightPercentString, bleedColorString, fillCornersString, splitDFCString);
+    	Bleeder.bleed(loadFolderPath, bleedWidthPercentString, bleedHeightPercentString, bleedColorString, fillCornersString, splitDFCString);
 		
     	return 0;
     	

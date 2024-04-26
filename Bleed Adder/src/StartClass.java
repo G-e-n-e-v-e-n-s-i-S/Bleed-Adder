@@ -21,27 +21,27 @@ public class StartClass
 	
 	
 	
-	static JFrame window;
+	public static JFrame window;
 	
-	static Container container;
-	
-	
-	
-	static Dimension screenSize;
+	public static Container container;
 	
 	
 	
-	static JLabel folderMessage;
-	
-	static JLabel imageMessage;
-	
-	static JLabel saveMessage;
-	
-	static JLabel saveNameMessage;
+	public static Dimension screenSize;
 	
 	
 	
-	static JProgressBar progressBar;
+	public static JLabel folderMessage;
+	
+	public static JLabel imageMessage;
+	
+	public static JLabel saveMessage;
+	
+	public static JLabel saveNameMessage;
+	
+	
+	
+	public static JProgressBar progressBar;
 	
 	
 	
@@ -100,11 +100,9 @@ public class StartClass
 		
 		
 		
-		BleedButtonListener listener = new BleedButtonListener();
+		JButton button = GUI.addButton(container, GUI.createConstraints(0, 6, 0, 20, 7, 1), "Add Bleed Margins");
 		
-		JButton button = GUI.addButton(container, GUI.createConstraints(0, 6, 0, 20, 7, 1), "Add Bleed Margins", listener);
-		
-		listener.button = button;
+		button.addActionListener(new BleedButtonListener(button));
 		
 		
 		
@@ -137,6 +135,15 @@ public class StartClass
 		
 		JButton button;
 		
+		public BleedButtonListener(JButton button)
+		{
+			
+			super();
+			
+			this.button = button;
+			
+		}
+
 		@Override
 		public void actionPerformed(ActionEvent event)
 		{

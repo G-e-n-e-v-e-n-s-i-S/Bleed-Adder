@@ -5,12 +5,16 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.List;
 
+import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JColorChooser;
@@ -19,8 +23,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
+import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingWorker;
 import javax.swing.UIManager;
 import javax.swing.text.JTextComponent;
 
@@ -141,7 +147,12 @@ public class GUI
 		
 	}
 	
-	
+	public static GridBagConstraints createConstraints(int x, int y, int xSize, int ySize)
+	{
+		
+		return createConstraints(x, y, 0, 0, xSize, ySize);
+		
+	}
 	
 	
 	
@@ -155,6 +166,40 @@ public class GUI
 		
 		
 		return label;
+		
+	}
+	
+	
+	
+	public static Component addZeroHeightVoid(Container container, GridBagConstraints constraints)
+	{
+		
+		constraints.weightx = 0.5;
+		
+		constraints.weighty = 0; 
+		
+		constraints.fill = GridBagConstraints.NONE;
+		
+		Component glue = Box.createHorizontalGlue();
+		
+		container.add(glue, constraints);
+		
+		return glue;
+		
+	}
+	
+	
+	
+	public static JSeparator addSeparator(Container container, GridBagConstraints constraints)
+	{
+		
+		JSeparator separator = new JSeparator();
+		
+		container.add(separator, constraints);
+		
+		
+		
+		return separator;
 		
 	}
 	
@@ -194,6 +239,49 @@ public class GUI
 		
 		return addComboBox(container, constraints, labelTexts, null);
 		
+	}
+	
+	public static JComboBox<String> addComboBox(Container container, GridBagConstraints constraints, List<String> labelTexts, ActionListener actionListener)
+	{
+		
+		return addComboBox(container, constraints, labelTexts.toArray(new String[0]), actionListener);
+		
+	}
+	
+	public static JComboBox<String> addComboBox(Container container, GridBagConstraints constraints, List<String> labelTexts)
+	{
+		
+		return addComboBox(container, constraints, labelTexts.toArray(new String[0]), null);
+		
+	}
+	
+	public static void replaceComboBoxContents(JComboBox<String> comboBox, List<String> items)
+	{
+		
+		ActionListener[] listeners = comboBox.getActionListeners();
+		
+		for (int i = 0; i < listeners.length; i++)
+		{
+			
+			comboBox.removeActionListener(listeners[i]);
+			
+		}
+		
+		comboBox.removeAllItems();
+		
+		for (int i = 0; i < items.size(); i++)
+		{
+			
+			comboBox.addItem(items.get(i));
+			
+		}
+		
+		for (int i = 0; i < listeners.length; i++)
+		{
+			
+			comboBox.addActionListener(listeners[i]);
+			
+		}
 	}
 	
 	
@@ -694,6 +782,17 @@ public class GUI
 		
 	}
 	
+	public static String pad(int number, int length)
+	{
+		
+		String string = Integer.toString(number);
+		
+		while(string.length() < length) string = "0" + string;
+		
+		return string;
+		
+	}
+	
 	
 	
 	static List<File> getFilesInFolder(String pathName, int getInSubfolders)
@@ -741,6 +840,95 @@ public class GUI
 		}
 		
 		return returnedFiles;
+		
+	}
+	
+	
+	
+	public static String getDate()
+	{
+		
+		Date date = new Date();
+		
+		LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		
+		LocalDateTime localDateTime = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+		
+		int year = localDate.getYear();
+		
+		int month = localDate.getMonthValue();
+		
+		int day = localDate.getDayOfMonth();
+		
+		int hour = localDateTime.getHour();
+		
+		int minute = localDateTime.getMinute();
+		
+		int second = localDateTime.getSecond();
+		
+		return year + "-" + pad(month, 2) + "-" + pad(day, 2) + " " + pad(hour, 2) + "h" + pad(minute, 2) + "m" + pad(second, 2) + "s";
+		
+	}
+	
+	public static String getTime()
+	{
+		
+		Date date = new Date();
+		
+		LocalDateTime localDateTime = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+		
+		int hour = localDateTime.getHour();
+		
+		int minute = localDateTime.getMinute();
+		
+		int second = localDateTime.getSecond();
+		
+		return pad(hour, 2) + "h " + pad(minute, 2) + "m " + pad(second, 2) + "s";
+		
+	}
+}
+
+
+
+
+
+class ButtonEnablerLaterWorker extends SwingWorker<Integer, Integer>
+{
+	
+	JButton button;
+	
+	long sleepMillis;
+	
+	
+	
+	ButtonEnablerLaterWorker(JButton button, long sleepMillis)
+	{
+		
+		this.button = button;
+		
+		this.sleepMillis = sleepMillis;
+		
+	}
+	
+	@Override
+	protected Integer doInBackground()
+	{
+		
+		try
+		{
+			
+			Thread.sleep(sleepMillis);
+			
+		} catch (InterruptedException e)
+		{
+			
+			System.out.println(new Date().toString().substring(11, 20) + " ERROR:   Sleep interrupted. Enabling button now.");
+			
+		}
+		
+		button.setEnabled(true);
+		
+		return 0;
 		
 	}
 }
