@@ -277,11 +277,11 @@ public class Bleeder
 		if (!logToConsole)
 		{
 			
-			StartClass.progressBar.setVisible(true);
+			Launcher.progressBar.setVisible(true);
 			
-			StartClass.progressBar.setValue(0);
+			Launcher.progressBar.setValue(0);
 			
-			StartClass.progressBar.setMaximum(imageCount);
+			Launcher.progressBar.setMaximum(imageCount);
 			
 		}
 		
@@ -296,9 +296,9 @@ public class Bleeder
 			if (!logToConsole)
 			{
 				
-				StartClass.progressBar.setValue(i);
+				Launcher.progressBar.setValue(i);
 				
-				StartClass.progressBar.setString((i+1) + "/" + imageCount + "        " + (100*(i+1)/imageCount) + "%");
+				Launcher.progressBar.setString((i+1) + "/" + imageCount + "        " + (100*(i+1)/imageCount) + "%");
 				
 			}
 			
@@ -532,7 +532,7 @@ public class Bleeder
 		if (!logToConsole)
 		{
 			
-			StartClass.progressBar.setVisible(false);
+			Launcher.progressBar.setVisible(false);
 			
 		}
 		
@@ -1210,33 +1210,33 @@ public class Bleeder
 			if (out.equals("folder"))
 			{
 				
-				if (!color.equals(Color.red) && StartClass.folderMessage.getForeground().equals(Color.red)) return;
+				if (!color.equals(Color.red) && Launcher.folderMessage.getForeground().equals(Color.red)) return;
 				
-				StartClass.folderMessage.setText(text);
+				Launcher.folderMessage.setText(text);
 				
-				StartClass.folderMessage.setForeground(color);
+				Launcher.folderMessage.setForeground(color);
 				
 			}
 			
 			else if (out.equals("image"))
 			{
 				
-				if (!color.equals(Color.red) && StartClass.imageMessage.getForeground().equals(Color.red)) return;
+				if (!color.equals(Color.red) && Launcher.imageMessage.getForeground().equals(Color.red)) return;
 				
-				StartClass.imageMessage.setText(text);
+				Launcher.imageMessage.setText(text);
 				
-				StartClass.imageMessage.setForeground(color);
+				Launcher.imageMessage.setForeground(color);
 				
 			}
 			
 			else if (out.equals("save"))
 			{
 				
-				if (!color.equals(Color.red) && StartClass.saveMessage.getForeground().equals(Color.red)) return;
+				if (!color.equals(Color.red) && Launcher.saveMessage.getForeground().equals(Color.red)) return;
 				
-				StartClass.saveMessage.setText(text);
+				Launcher.saveMessage.setText(text);
 				
-				StartClass.saveMessage.setForeground(color);
+				Launcher.saveMessage.setForeground(color);
 				
 			}
 			
@@ -1244,17 +1244,17 @@ public class Bleeder
 			else
 			{
 				
-				if (!color.equals(Color.red) && StartClass.saveNameMessage.getForeground().equals(Color.red)) return;
+				if (!color.equals(Color.red) && Launcher.saveNameMessage.getForeground().equals(Color.red)) return;
 				
-				StartClass.saveNameMessage.setText(text);
+				Launcher.saveNameMessage.setText(text);
 				
-				StartClass.saveNameMessage.setForeground(color);
+				Launcher.saveNameMessage.setForeground(color);
 				
 			}
 			
 			
 			
-			if (color.equals(Color.red) || packWhenLogging) StartClass.window.pack();
+			if (color.equals(Color.red) || packWhenLogging) Launcher.window.pack();
 			
 		}
 	}

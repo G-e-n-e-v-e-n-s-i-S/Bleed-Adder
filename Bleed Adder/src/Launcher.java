@@ -16,7 +16,7 @@ import javax.swing.SwingConstants;
 
 
 
-public class StartClass
+public class Launcher
 {
 	
 	
