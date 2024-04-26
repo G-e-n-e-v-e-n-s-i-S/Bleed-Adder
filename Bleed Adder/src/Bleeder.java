@@ -99,7 +99,7 @@ public class Bleeder
 		if (!loadFolder.exists())
 		{
 			
-			log("Specified folder path ' " + loadFolderPath + " ' does not exist.", Color.red, "folder");
+			log("Specified folder path ' " + loadFolderPath + " ' does not exist.", Color.red, "load");
 			
 			return;
 			
@@ -108,7 +108,7 @@ public class Bleeder
 		if (!loadFolder.isDirectory())
 		{
 			
-			log("Specified folder path ' " + loadFolderPath + " ' is not a folder.", Color.red, "folder");
+			log("Specified folder path ' " + loadFolderPath + " ' is not a folder.", Color.red, "load");
 			
 			return;
 			
@@ -141,7 +141,7 @@ public class Bleeder
 		if (imageCount < 1)
 		{
 			
-			log("No PNG images found in specified folder.", Color.red, "folder");
+			log("No PNG images found in specified folder.", Color.red, "load");
 			
 			return;
 			
@@ -150,7 +150,7 @@ public class Bleeder
 		else
 		{
 			
-			log(imageCount + " PNG image" + (imageCount > 1 ? "s" : "") + " found.", Color.black, "folder");
+			log(imageCount + " PNG image" + (imageCount > 1 ? "s" : "") + " found.", Color.black, "load");
 			
 		}
 		
@@ -169,7 +169,7 @@ public class Bleeder
 		} catch (Exception e)
 		{
 			
-			log("Could not interpret bleed horizontal size ' " + bleedWidthPercentString + " ' as a number.", Color.red, "image");
+			log("Could not interpret bleed horizontal size ' " + bleedWidthPercentString + " ' as a number.", Color.red, "logic");
 			
 			return;
 			
@@ -178,7 +178,7 @@ public class Bleeder
 		if (bleedWidthPercent < 0d)
 		{
 			
-			log("Bleed horizontal size must be positive.", Color.red, "image");
+			log("Bleed horizontal size must be positive.", Color.red, "logic");
 			
 			return;
 			
@@ -192,7 +192,7 @@ public class Bleeder
 		} catch (Exception e)
 		{
 			
-			log("Could not interpret vertical size ' " + bleedHeightPercentString + " ' as a number.", Color.red, "image");
+			log("Could not interpret vertical size ' " + bleedHeightPercentString + " ' as a number.", Color.red, "logic");
 			
 			return;
 			
@@ -201,7 +201,7 @@ public class Bleeder
 		if (bleedHeightPercent < 0d)
 		{
 			
-			log("Bleed vertical size must be positive.", Color.red, "image");
+			log("Bleed vertical size must be positive.", Color.red, "logic");
 			
 			return;
 			
@@ -223,7 +223,7 @@ public class Bleeder
 		else if (!bleedColorString.equals("Gold"))
 		{
 			
-			log("Could not interpret bleed color ' " + bleedColorString + " '.", Color.red, "image");
+			log("Could not interpret bleed color ' " + bleedColorString + " '.", Color.red, "logic");
 			
 			return;
 			
@@ -239,7 +239,7 @@ public class Bleeder
 		else if (!fillCornersString.equals("No"))
 		{
 			
-			log("Could not interpret fill corners ' " + fillCornersString + " '.", Color.red, "image");
+			log("Could not interpret fill corners ' " + fillCornersString + " '.", Color.red, "logic");
 			
 			return;
 			
@@ -255,7 +255,7 @@ public class Bleeder
 		else if (!splitDFCString.equals("No"))
 		{
 			
-			log("Could not interpret split DFC ' " + splitDFCString + " '.", Color.red, "image");
+			log("Could not interpret split DFC ' " + splitDFCString + " '.", Color.red, "logic");
 			
 			return;
 			
@@ -285,7 +285,7 @@ public class Bleeder
 			
 		}
 		
-		log("Adding bleed...", Color.black, "image");
+		log("Adding bleed...", Color.black, "logic");
 		
 		
 		
@@ -326,7 +326,7 @@ public class Bleeder
 			} catch (IOException e)
 			{
 				
-				log("Could not load image ' " + images.get(i).getName() + " '.", Color.red, "image");
+				log("Could not load image ' " + images.get(i).getName() + " '.", Color.red, "logic");
 				
 				failCount++;
 				
@@ -539,7 +539,7 @@ public class Bleeder
 		if (failCount > 0)
 		{
 			
-			log(failCount + " card" + (failCount > 1 ? "s" : "") + " could not be saved.", Color.red, "image");
+			log(failCount + " card" + (failCount > 1 ? "s" : "") + " could not be saved.", Color.red, "logic");
 			
 		}
 		
@@ -552,14 +552,14 @@ public class Bleeder
 			
 			String separator = dfcString != "" && rotatedString != "" ? " " : "";
 			
-			log(dfcString + separator + rotatedString, Color.black, "image");
+			log(dfcString + separator + rotatedString, Color.black, "logic");
 			
 		}
 		
 		else
 		{
 			
-			log("", Color.black, "image");
+			log("", Color.black, "logic");
 			
 		}
 		
@@ -1207,25 +1207,25 @@ public class Bleeder
 				
 			}
 			
-			if (out.equals("folder"))
+			if (out.equals("load"))
 			{
 				
-				if (!color.equals(Color.red) && Launcher.folderMessage.getForeground().equals(Color.red)) return;
+				if (!color.equals(Color.red) && Launcher.loadMessage.getForeground().equals(Color.red)) return;
 				
-				Launcher.folderMessage.setText(text);
+				Launcher.loadMessage.setText(text);
 				
-				Launcher.folderMessage.setForeground(color);
+				Launcher.loadMessage.setForeground(color);
 				
 			}
 			
-			else if (out.equals("image"))
+			else if (out.equals("logic"))
 			{
 				
-				if (!color.equals(Color.red) && Launcher.imageMessage.getForeground().equals(Color.red)) return;
+				if (!color.equals(Color.red) && Launcher.logicMessage.getForeground().equals(Color.red)) return;
 				
-				Launcher.imageMessage.setText(text);
+				Launcher.logicMessage.setText(text);
 				
-				Launcher.imageMessage.setForeground(color);
+				Launcher.logicMessage.setForeground(color);
 				
 			}
 			

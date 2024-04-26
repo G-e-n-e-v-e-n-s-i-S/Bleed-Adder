@@ -19,7 +19,6 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
@@ -34,13 +33,6 @@ import javax.swing.text.JTextComponent;
 
 public class GUI
 {
-	
-	
-	static JFrame mainWindow;
-	
-	static Container mainContainer;
-	
-	
 	
 	
 	
