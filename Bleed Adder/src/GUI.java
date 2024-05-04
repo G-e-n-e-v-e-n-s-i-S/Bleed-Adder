@@ -5,6 +5,11 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -877,6 +882,32 @@ public class GUI
 		
 		return pad(hour, 2) + "h " + pad(minute, 2) + "m " + pad(second, 2) + "s";
 		
+	}
+	
+	
+	
+	public static void logExceptionStackTrace(Exception exception)
+	{
+		
+		StringWriter stringWriter = new StringWriter();
+		
+		PrintWriter printWriter = new PrintWriter(stringWriter);
+		
+		exception.printStackTrace(printWriter);
+		
+		String stringStackTrace = stringWriter.toString(); 
+		
+		try
+		{
+			
+			Files.write(Paths.get(System.getProperty("user.home"), "Desktop", "StackTrace.txt"), stringStackTrace.getBytes());
+			
+		} catch (IOException e)
+		{
+			
+			System.out.println(new Date().toString().substring(11, 20) + " ERROR:   Could not log stack trace.");
+			
+		}
 	}
 }
 

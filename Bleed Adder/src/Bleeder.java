@@ -1092,7 +1092,7 @@ public class Bleeder
 	
 	
 	
-
+	
 	static int averageColor(Collection<Integer> colors)
 	{
 		
@@ -1147,8 +1147,8 @@ public class Bleeder
 	{
 		
 		return (a << 24) | ((r & 255) << 16) | ((g & 255) << 8) | (b & 255);
-        
-    }
+		
+	}
 	
 	
 	
