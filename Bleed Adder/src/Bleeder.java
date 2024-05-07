@@ -506,7 +506,7 @@ public class Bleeder
 				
 				name = name.substring(0, name.length()-4);
 				
-				boolean successFront = saveImage(front, saveFolderPath + name + "[FRONT].png");
+				boolean successFront = saveImage(front, saveFolderPath + name + ".png");
 				
 				boolean successBack = saveImage(back, saveFolderPath + name + "[BACK].png");
 				
