@@ -62,7 +62,7 @@ public class Bleeder
 	//	
 	//	logToConsole = true;
 	//	
-	//	addBleed("D:\\MSE Folder\\Renders", "4.8", "3.6", "Auto", "Yes", "Yes");
+	//	bleed("D:\\Magic Set Editor Folder\\Renders", "0", "0", "Auto", "Yes", "Yes");
 	//	
 	//}
 	
@@ -468,7 +468,7 @@ public class Bleeder
 			if (fillCorners)
 			{
 				
-				front = addCorners(front, bleedWidth, bleedHeight, false);
+				front = addCorners(front, false);
 				
 			}
 			
@@ -489,7 +489,7 @@ public class Bleeder
 				if (fillCorners)
 				{
 					
-					back = addCorners(back, bleedWidth, bleedHeight, false);
+					back = addCorners(back, false);
 					
 				}
 				
@@ -506,9 +506,34 @@ public class Bleeder
 				
 				name = name.substring(0, name.length()-4);
 				
-				boolean successFront = saveImage(front, saveFolderPath + name + ".png");
+				String nameFront = null;
 				
-				boolean successBack = saveImage(back, saveFolderPath + name + "[BACK].png");
+				String nameBack = null;
+				
+				if (name.contains(" -- "))
+				{
+					
+					String[] split = name.split(" -- ");
+					
+					nameFront = saveFolderPath + split[0] + ".png";
+					
+					nameBack = saveFolderPath + split[1] + ".png";
+					
+				}
+				
+				else
+				{
+					
+					nameFront = saveFolderPath + name + ".png";
+					
+					nameBack = saveFolderPath + name + "[BACK].png";
+					
+					
+				}
+				
+				boolean successFront = saveImage(front, nameFront);
+				
+				boolean successBack = saveImage(back, nameBack);
 				
 				if (!successFront) failCount++;
 				
@@ -635,7 +660,7 @@ public class Bleeder
 	
 	
 	
-	public static BufferedImage addCorners(BufferedImage image, int bleedWidth, int bleedHeight, boolean average)
+	public static BufferedImage addCorners(BufferedImage image, boolean average)
 	{
 		
 		//Get info
@@ -649,18 +674,18 @@ public class Bleeder
 		
 		BufferedImage result = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		
-	    Graphics2D graphics = result.createGraphics();
-	    
-	    graphics.drawRenderedImage(image, null);
+		Graphics2D graphics = result.createGraphics();
 		
-	    graphics.dispose();
-	    
-	    
-	    
-	    if (average)
+		graphics.drawRenderedImage(image, null);
+		
+		graphics.dispose();
+		
+		
+		
+		if (average)
 		{
 			
-	    	//Walk along a diagonal around the corner, get average color on that diagonal
+			//Walk along a diagonal around the corner, get average color on that diagonal
 			List<Integer> topLeftColors = new ArrayList<>();
 			
 			List<Integer> topRightColors = new ArrayList<>();
@@ -705,21 +730,21 @@ public class Bleeder
 					
 					if (x + y < cornerSize)
 					{
-	
+						
 						result.setRGB(x, y, topLeftColor);
 						
 					}
 					
 					else if (width - x + y < cornerSize + 1)
 					{
-	
+						
 						result.setRGB(x, y, topRightColor);
 						
 					}
 					
 					else if (x + height - y < cornerSize + 1)
 					{
-	
+						
 						result.setRGB(x, y, bottomLeftColor);
 						
 					}
@@ -741,27 +766,27 @@ public class Bleeder
 			for (int i = 0; i < cornerSize + 1; i++)
 			{
 				
-				addLine(result, i, cornerSize - i, "top left", bleedWidth, bleedHeight);
+				addLine(result, i, cornerSize - i, "top left");
 				
-				addLine(result, i+1, cornerSize - i, "top left", bleedWidth, bleedHeight);
-				
-				
-				
-				addLine(result, width - 1 - i, cornerSize - i, "top right", bleedWidth, bleedHeight);
-				
-				addLine(result, width - 1 - i-1, cornerSize - i, "top right", bleedWidth, bleedHeight);
+				addLine(result, i+1, cornerSize - i, "top left");
 				
 				
 				
-				addLine(result, i, height - 1 - cornerSize + i, "bottom left", bleedWidth, bleedHeight);
+				addLine(result, width - 1 - i, cornerSize - i, "top right");
 				
-				addLine(result, i+1, height - 1 - cornerSize + i, "bottom left", bleedWidth, bleedHeight);
+				addLine(result, width - 1 - i-1, cornerSize - i, "top right");
 				
 				
 				
-				addLine(result, width - 1 - i, height - 1 - cornerSize + i, "bottom right", bleedWidth, bleedHeight);
+				addLine(result, i, height - 1 - cornerSize + i, "bottom left");
 				
-				addLine(result, width - 1 - i-1, height - 1 - cornerSize + i, "bottom right", bleedWidth, bleedHeight);
+				addLine(result, i+1, height - 1 - cornerSize + i, "bottom left");
+				
+				
+				
+				addLine(result, width - 1 - i, height - 1 - cornerSize + i, "bottom right");
+				
+				addLine(result, width - 1 - i-1, height - 1 - cornerSize + i, "bottom right");
 				
 			}
 		}
@@ -798,29 +823,29 @@ public class Bleeder
 		for (int x = bleedWidth; x < width - bleedWidth; x++)
 		{
 			
-			addGenevensisLine(result, x, bleedHeight, "horizontal", bleedWidth, bleedHeight);
+			addGenevensisLine(result, x, bleedHeight, "horizontal");
 			
 		}
 		
 		for (int y = bleedHeight; y < height - bleedHeight; y++)
 		{
 			
-			addGenevensisLine(result, bleedWidth, y, "vertical", bleedWidth, bleedHeight);
+			addGenevensisLine(result, bleedWidth, y, "vertical");
 			
-			addGenevensisLine(result, width-bleedWidth-1, y, "vertical", bleedWidth, bleedHeight);
+			addGenevensisLine(result, width-bleedWidth-1, y, "vertical");
 			
 		}
 		
 		for (int z = 0; z < cornerSize; z++)
 		{
 			
-			addGenevensisLine(result, bleedWidth+z, bleedHeight+cornerSize-z, "up left", bleedWidth, bleedHeight);
+			addGenevensisLine(result, bleedWidth+z, bleedHeight+cornerSize-z, "up left");
 			
-			addGenevensisLine(result, bleedWidth+z+1, bleedHeight+cornerSize-z, "up left", bleedWidth, bleedHeight);
+			addGenevensisLine(result, bleedWidth+z+1, bleedHeight+cornerSize-z, "up left");
 			
-			addGenevensisLine(result, width-bleedWidth-1-cornerSize+z, bleedHeight+z, "down right", bleedWidth, bleedHeight);
+			addGenevensisLine(result, width-bleedWidth-1-cornerSize+z, bleedHeight+z, "down right");
 			
-			addGenevensisLine(result, width-bleedWidth-1-cornerSize+z-1, bleedHeight+z, "down right", bleedWidth, bleedHeight);
+			addGenevensisLine(result, width-bleedWidth-1-cornerSize+z-1, bleedHeight+z, "down right");
 			
 		}
 		
@@ -830,12 +855,30 @@ public class Bleeder
 	
 	
 	
-	public static void addGenevensisLine(BufferedImage image, int x, int y, String checkDirection, int bleedWidth, int bleedHeight)
+	public static void addGenevensisLine(BufferedImage image, int x, int y, String checkDirection)
 	{
 		
+		int width = image.getWidth();
+		
+		int height = image.getHeight();
+		
+		//Check that there is enough room
+		if
+		(
+				x-4 < 0
+			||	x+4 >= width
+			||	y-4 < 0
+			||	y+4 >= height
+		)
+		{
+			
+			return;
+			
+		}
+		
+		
+		
 		int color = image.getRGB(x, y);
-		
-		
 		
 		//Only extend lines that are of the frame colors
 		if (!GenevensisFrameColors.contains(color)) return;
@@ -956,13 +999,13 @@ public class Bleeder
 			
 		}
 		
-		if (extendDirection != null) addLine(image, x, y, extendDirection, bleedWidth, bleedHeight);
+		if (extendDirection != null) addLine(image, x, y, extendDirection);
 		
 	}
 	
 	
 	
-	public static void addLine(BufferedImage image, int x, int y, String extendDirection, int bleedWidth, int bleedHeight)
+	public static void addLine(BufferedImage image, int x, int y, String extendDirection)
 	{
 		
 		int width = image.getWidth();
@@ -971,19 +1014,19 @@ public class Bleeder
 		
 		int color = image.getRGB(x, y);
 		
-		int bleedSize = Math.min(bleedWidth, bleedHeight);
 		
 		
-		
+		int p = 1;
+			
 		if (extendDirection.equals("top left"))
 		{
 			
-			for (int p=1; p<=bleedSize; p++)
+			while (x-p >= 0 && y-p >= 0)
 			{
 				
-				if (x-p < 0 || y-p < 0) break;
-				
 				image.setRGB(x-p, y-p, color);
+				
+				p++;
 				
 			}
 		}
@@ -991,12 +1034,12 @@ public class Bleeder
 		else if (extendDirection.equals("top right"))
 		{
 			
-			for (int p=1; p<=bleedSize; p++)
+			while (x+p < width && y-p >= 0)
 			{
 				
-				if (x+p >= width || y-p < 0) break;
-				
 				image.setRGB(x+p, y-p, color);
+				
+				p++;
 				
 			}
 		}
@@ -1004,12 +1047,12 @@ public class Bleeder
 		else if (extendDirection.equals("bottom left"))
 		{
 			
-			for (int p=1; p<=bleedSize; p++)
+			while (x-p >= 0 && y+p < height)
 			{
 				
-				if (x-p < 0 || y+p >= height) break;
-				
 				image.setRGB(x-p, y+p, color);
+				
+				p++;
 				
 			}
 		}
@@ -1017,12 +1060,12 @@ public class Bleeder
 		else if (extendDirection.equals("bottom right"))
 		{
 			
-			for (int p=1; p<=bleedSize; p++)
+			while (x+p < width && y+p < height)
 			{
 				
-				if (x+p >= width || y+p >= height) break;
-				
 				image.setRGB(x+p, y+p, color);
+				
+				p++;
 				
 			}
 		}
