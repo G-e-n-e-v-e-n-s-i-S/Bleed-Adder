@@ -7,6 +7,7 @@
  *	If using the Genevensis frames, extends frame lines
  *	Optionally, recolors corners
  *	Optionally, splits DFC cards into front and back
+ *	Will look for an xml file with the same name as 'loadFolderPath' to find names of DFC backs
  *	Saves the images in a sub folder of the 'loadFolderPath'
 */
 
@@ -17,6 +18,9 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -24,6 +28,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
 import javax.swing.SwingWorker;
@@ -62,7 +67,7 @@ public class Bleeder
 	//	
 	//	logToConsole = true;
 	//	
-	//	bleed("D:\\Magic Set Editor Folder\\Renders", "0", "0", "Auto", "Yes", "Yes");
+	//	bleed("D:\\Magic Set Editor Folder\\Renders\\set-files\\", "0", "0", "Auto", "Yes", "Yes");
 	//	
 	//}
 	
@@ -113,6 +118,34 @@ public class Bleeder
 			return;
 			
 		}
+		
+		
+		
+		//Try to load cockatrice export xml splitterPaths
+		List<String> splitterPaths = new ArrayList<String>();
+		
+		try
+		{
+			
+			String xmlPath = loadFolderPath.replaceAll(Pattern.quote("-files" + File.separator) + "$", "") + ".xml";
+			
+			List<String> xmlLines = Files.readAllLines(Paths.get(xmlPath), StandardCharsets.UTF_8);
+			
+			for (int i = 0; i < xmlLines.size(); i++)
+			{
+				
+				String line = xmlLines.get(i);
+				
+				if (line.contains("splitterPath=\"/"))
+				{
+					
+					String splitterPath = xmlLines.get(i).replaceAll(".*splitterPath=\"/([^\"]+)\\.png\".*", "$1");
+					
+					splitterPaths.add(splitterPath);
+					
+				}
+			}
+		} catch (IOException e) { }
 		
 		
 		
@@ -518,6 +551,25 @@ public class Bleeder
 					nameFront = saveFolderPath + split[0] + ".png";
 					
 					nameBack = saveFolderPath + split[1] + ".png";
+					
+				}
+				
+				else if (splitterPaths.contains(name))
+				{
+					
+					int index = splitterPaths.indexOf(name);
+					
+					nameFront = saveFolderPath + name + ".png";
+					
+					if (index+1 < splitterPaths.size())
+					{
+						
+						nameBack = saveFolderPath + splitterPaths.get(index+1) + ".png";
+						
+					}
+					
+					else nameBack = saveFolderPath + name + "[BACK].png";
+					
 					
 				}
 				
