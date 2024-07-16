@@ -17,10 +17,10 @@ Decide if the corners should be recolored.
 If the images contain white corners (like some Magic Set Editor templates output), select yes.
 If the corners are already filled in with the card frame, a border or art, select no.
 
-The program will create a new folder named "Bleed Adder Results" inside the specified folder, and store the results there.
+The program will create a new folder named "Bleed Adder Results" inside the specified folder, and store the results there. 
+Any existing images found at these locations, for example from a previous execution of the program, will be overwritten without warning!!!
+The original images will not be modified or overwritten though.
 
-It will also split DFC cards into their constituant faces.
-
-Any existing images found at these locations, will be overwritten without warning!!!
+The program will also split DFC cards into their constituant faces.
 
 Hit the "Add Bleed Margins" button to run the program.
